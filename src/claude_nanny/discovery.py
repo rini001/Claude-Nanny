@@ -27,3 +27,32 @@ class SessionDiscovery:
             session_files,
             key=lambda file: file.stat().st_mtime
         )
+
+    def get_latest_active_project(self) -> Path:
+        projects = self.get_project_directories()
+
+        latest_project = None
+        latest_time = 0
+
+        for project in projects:
+
+            try:
+                latest_session = self.get_latest_session(project)
+
+                modified_time = (
+                    latest_session.stat().st_mtime
+                )
+
+                if modified_time > latest_time:
+                    latest_time = modified_time
+                    latest_project = project
+
+            except ValueError:
+                continue
+
+        if latest_project is None:
+            raise ValueError(
+                "No active projects found"
+            )
+
+        return latest_project

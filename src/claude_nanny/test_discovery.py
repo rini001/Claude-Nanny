@@ -3,16 +3,12 @@ from claude_nanny.discovery import SessionDiscovery
 
 discovery = SessionDiscovery()
 
-projects = discovery.get_project_directories()
+project = discovery.get_latest_active_project()
 
-print(f"Projects found: {len(projects)}\n")
+print("Latest Project:")
+print(project.name)
 
-for project in projects:
-    print(project.name)
+session = discovery.get_latest_session(project)
 
-latest_session = discovery.get_latest_session(
-    projects[0]
-)
-
-print("\nLatest session:")
-print(latest_session.name)
+print("\nLatest Session:")
+print(session.name)
