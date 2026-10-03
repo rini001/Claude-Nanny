@@ -2,7 +2,7 @@ from pathlib import Path
 import json
 
 
-def inspect_session_file():
+def inspect_message_record():
     session_file = (
         Path.home()
         / ".claude"
@@ -11,26 +11,20 @@ def inspect_session_file():
         / "dbee4e39-57f3-4028-870a-f955e5d3678d.jsonl"
     )
 
-    print(f"Reading:\n{session_file}\n")
-
     with open(session_file, "r", encoding="utf-8") as file:
 
-        for index, line in enumerate(file):
-
-            if index >= 5:
-                break
-
+        for line in file:
             data = json.loads(line)
 
-            print("=" * 80)
-            print(f"Record {index + 1}")
-            print(f"Type: {type(data)}")
+            if "message" in data:
 
-            if isinstance(data, dict):
-                print("\nKeys:")
+                print("=" * 80)
+                print("FOUND MESSAGE RECORD")
+                print("=" * 80)
 
-                for key in data.keys():
-                    print(f" - {key}")
+                print(json.dumps(data, indent=2)[:5000])
+
+                break
 
 
-inspect_session_file()
+inspect_message_record()
