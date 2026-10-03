@@ -159,17 +159,6 @@ Claude Nanny solves this by converting Claude Code conversations into structured
 
 ---
 
-## 🔮 Roadmap
-
-- [ ] OpenAI support
-- [ ] Ollama support
-- [ ] Weekly summaries
-- [ ] Session title detection
-- [ ] HTML export
-- [ ] VS Code extension
-- [ ] Team handoff generation
-
----
 
 ## 📸 Screenshots
 
