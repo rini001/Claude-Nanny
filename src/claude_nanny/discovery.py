@@ -1,27 +1,27 @@
 from pathlib import Path
-import json
 
 
-def inspect_history_file():
-    history_file = Path.home() / ".claude" / "history.jsonl"
+def inspect_client_project():
+    projects_dir = Path.home() / ".claude" / "projects"
 
-    print(f"Reading: {history_file}\n")
+    project_dir = (
+        projects_dir
+        / "c--Users-Dell-Desktop-New-folder--5--shiftninja-client"
+    )
 
-    with open(history_file, "r", encoding="utf-8") as file:
-        for index, line in enumerate(file):
+    print(f"Project: {project_dir}\n")
 
-            if index >= 3:
-                break
+    if not project_dir.exists():
+        print("Project not found")
+        return
 
-            data = json.loads(line)
+    items = list(project_dir.iterdir())
 
-            print("=" * 80)
-            print(f"Record {index + 1}\n")
+    print(f"Items found: {len(items)}\n")
 
-            for key, value in data.items():
-                print(f"{key}:")
-                print(value)
-                print()
+    for item in items:
+        item_type = "DIR" if item.is_dir() else "FILE"
+        print(f"[{item_type}] {item.name}")
 
 
-inspect_history_file()
+inspect_client_project()
