@@ -1,6 +1,6 @@
 from claude_nanny.discovery import SessionDiscovery
 from claude_nanny.reader import SessionReader
-from claude_nanny.summarizer import create_summary
+from claude_nanny.handoff_generator import HandoffGenerator
 
 
 def main():
@@ -18,7 +18,11 @@ def main():
         session_file
     )
 
-    print(create_summary(messages))
+    generator = HandoffGenerator()
+
+    handoff = generator.generate(messages)
+
+    print(handoff)
 
 
 if __name__ == "__main__":
