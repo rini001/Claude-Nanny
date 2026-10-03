@@ -37,7 +37,7 @@ Total messages: 41
 Saved: handoffs/handoff_2026-10-03.md
 ```
 
-![Summary Output](docs/summary-output.png)
+![Summary Output](docs/summary.PNG)
 
 ---
 
@@ -56,7 +56,7 @@ Total messages: 41
 Saved: handoffs/handoff_2026-10-03.md
 ```
 
-![Handoff Output](docs/handoff-output.png)
+![Handoff Output](docs/handoff_1.png)
 
 ---
 
