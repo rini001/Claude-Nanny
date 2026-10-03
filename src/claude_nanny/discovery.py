@@ -1,4 +1,6 @@
 from pathlib import Path
+from pathlib import Path
+from datetime import date
 
 
 class SessionDiscovery:
@@ -14,6 +16,29 @@ class SessionDiscovery:
             for item in projects_dir.iterdir()
             if item.is_dir()
         ]
+
+    def get_sessions_for_today(
+        self,
+        project_dir: Path,
+    ) -> list[Path]:
+
+        today = date.today()
+
+        sessions = []
+
+        for session_file in project_dir.glob("*.jsonl"):
+
+            modified = date.fromtimestamp(
+                session_file.stat().st_mtime
+            )
+
+            if modified == today:
+                sessions.append(session_file)
+
+        return sorted(
+            sessions,
+            key=lambda file: file.stat().st_mtime,
+        )
 
     def get_latest_session(self, project_dir: Path) -> Path:
         session_files = list(project_dir.glob("*.jsonl"))

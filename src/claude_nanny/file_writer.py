@@ -9,6 +9,11 @@ class FileWriter:
         output_path: Path,
     ) -> None:
 
+        output_path.parent.mkdir(
+            parents=True,
+            exist_ok=True,
+        )
+
         output_path.write_text(
             content,
             encoding="utf-8",
