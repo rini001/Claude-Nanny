@@ -1,0 +1,2 @@
+[console_scripts]
+nanny = claude_nanny.__main__:main

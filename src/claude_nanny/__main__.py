@@ -1,16 +1,34 @@
+import sys
+from datetime import date
 from pathlib import Path
 
-from claude_nanny.discovery import SessionDiscovery
-from claude_nanny.reader import SessionReader
+from claude_nanny.discovery import (
+    SessionDiscovery,
+)
+from claude_nanny.reader import (
+    SessionReader,
+)
 from claude_nanny.handoff_generator import (
     HandoffGenerator,
+)
+from claude_nanny.summary_generator import (
+    SummaryGenerator,
 )
 from claude_nanny.file_writer import (
     FileWriter,
 )
 
 
-def main():
+def get_output_path() -> Path:
+
+    today = date.today().isoformat()
+
+    return Path(
+        f"handoffs/handoff_{today}.md"
+    )
+
+
+def load_today_messages():
 
     discovery = SessionDiscovery()
 
@@ -40,40 +58,102 @@ def main():
             )
         )
 
+        print(
+            f"{session_file.name}: "
+            f"{len(messages)} messages"
+        )
+
         all_messages.extend(
             messages
         )
 
     all_messages.sort(
-        key=lambda message: (
-            message.timestamp
-        )
+        key=lambda message:
+        message.timestamp
     )
 
     print(
-        f"Total messages: {len(all_messages)}"
+        f"Total messages: "
+        f"{len(all_messages)}"
     )
 
-    generator = HandoffGenerator()
+    return all_messages
 
-    handoff = generator.generate(
-        all_messages
+
+def run_summary():
+
+    messages = load_today_messages()
+
+    generator = SummaryGenerator()
+
+    content = generator.generate(
+        messages
     )
 
     writer = FileWriter()
 
-    output_path = Path(
-        "handoffs/latest.md"
-    )
+    output_path = get_output_path()
 
     writer.save_handoff(
-        handoff,
+        content,
         output_path,
     )
 
     print(
         f"Saved: {output_path}"
     )
+
+
+def run_handoff():
+
+    messages = load_today_messages()
+
+    generator = HandoffGenerator()
+
+    content = generator.generate(
+        messages
+    )
+
+    writer = FileWriter()
+
+    output_path = get_output_path()
+
+    writer.save_handoff(
+        content,
+        output_path,
+    )
+
+    print(
+        f"Saved: {output_path}"
+    )
+
+
+def main():
+
+    print("Claude Nanny")
+
+    command = (
+        sys.argv[1]
+        if len(sys.argv) > 1
+        else "summary"
+    )
+
+    if command == "summary":
+        run_summary()
+
+    elif command == "handoff":
+        run_handoff()
+
+    else:
+        print(
+            "Usage:"
+        )
+        print(
+            "nanny summary"
+        )
+        print(
+            "nanny handoff"
+        )
 
 
 if __name__ == "__main__":

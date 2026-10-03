@@ -1,0 +1,17 @@
+[project]
+name = "claude-nanny"
+version = "0.1.0"
+requires-python = ">=3.12"
+
+[project.scripts]
+nanny = "claude_nanny.__main__:main"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
