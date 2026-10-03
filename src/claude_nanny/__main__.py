@@ -1,24 +1,28 @@
-from pathlib import Path
-
+from claude_nanny.discovery import SessionDiscovery
 from claude_nanny.reader import SessionReader
 
 
 def main():
-    session_file = (
-        Path.home()
-        / ".claude"
-        / "projects"
-        / "c--Users-Dell-Desktop-New-folder--5--shiftninja-client"
-        / "025242dd-ddfc-4866-9a30-60b92b8c450e.jsonl"
+    discovery = SessionDiscovery()
+
+    project = discovery.get_latest_active_project()
+
+    session_file = discovery.get_latest_session(
+        project
     )
+
+    print(f"Project: {project.name}")
+    print(f"Session: {session_file.name}\n")
 
     reader = SessionReader()
 
-    messages = reader.read_messages(session_file)
+    messages = reader.read_messages(
+        session_file
+    )
 
     print(f"Found {len(messages)} messages\n")
 
-    for message in messages[:10]:
+    for message in messages[-10:]:
         print(f"[{message.role}]")
         print(message.content)
         print("-" * 50)
