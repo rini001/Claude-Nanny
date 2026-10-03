@@ -1,4 +1,4 @@
-# Claude Nanny 👶
+# Claude Nanny 
 
 Automatically generate engineering handoffs and summaries from Claude Code sessions.
 
@@ -6,19 +6,19 @@ Claude Nanny reads Claude Code conversation history, aggregates work across mult
 
 ---
 
-## ✨ Features
+## Features
 
-- 🔍 Automatically discovers the latest active Claude Code project
-- 📂 Reads all Claude sessions for the current day
-- 🔗 Merges multiple sessions into a single timeline
-- 📝 Generates local summaries (no AI required)
-- 🤖 Generates AI-powered engineering handoffs using Gemini
-- 📄 Exports markdown files for documentation and knowledge transfer
-- ⚡ Simple CLI workflow
+- Automatically discovers the latest active Claude Code project
+-  Reads all Claude sessions for the current day
+-  Merges multiple sessions into a single timeline
+- Generates local summaries (no AI required)
+- Generates AI-powered engineering handoffs using Gemini
+- Exports markdown files for documentation and knowledge transfer
+- Simple CLI workflow
 
 ---
 
-## 🚀 Example Usage
+##  Example Usage
 
 ### Generate a local summary
 
@@ -60,7 +60,7 @@ Saved: handoffs/handoff_2026-10-03.md
 
 ---
 
-## 📋 Example Generated Handoff
+## Example Generated Handoff
 
 ```md
 # Daily Engineering Handoff
@@ -88,7 +88,7 @@ Saved: handoffs/handoff_2026-10-03.md
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```text
 Claude Code Sessions
@@ -113,7 +113,7 @@ Markdown Output Files
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 claude-nanny/
@@ -136,7 +136,7 @@ claude-nanny/
 
 ---
 
-## 💡 Why I Built This
+## Why I Built This
 
 While working with Claude Code across multiple sessions, it becomes difficult to:
 
@@ -148,17 +148,6 @@ While working with Claude Code across multiple sessions, it becomes difficult to
 Claude Nanny solves this by converting Claude Code conversations into structured documentation automatically.
 
 ---
-
-## 🛠 Tech Stack
-
-- Python
-- Claude Code Session Files (.jsonl)
-- Gemini API
-- Markdown Export
-- CLI Tooling
-
----
-
 
 ## 📸 Screenshots
 
