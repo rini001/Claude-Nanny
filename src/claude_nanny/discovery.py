@@ -5,33 +5,23 @@ import json
 def inspect_history_file():
     history_file = Path.home() / ".claude" / "history.jsonl"
 
-    print(f"Reading: {history_file}")
-    print()
-
-    if not history_file.exists():
-        print("History file not found")
-        return
+    print(f"Reading: {history_file}\n")
 
     with open(history_file, "r", encoding="utf-8") as file:
         for index, line in enumerate(file):
 
-            if index >= 5:
+            if index >= 3:
                 break
 
-            try:
-                data = json.loads(line)
+            data = json.loads(line)
 
-                print("=" * 60)
-                print(f"Line {index + 1}")
+            print("=" * 80)
+            print(f"Record {index + 1}\n")
 
-                if isinstance(data, dict):
-                    print("Keys:")
-
-                    for key in data.keys():
-                        print(f" - {key}")
-
-            except Exception as error:
-                print(error)
+            for key, value in data.items():
+                print(f"{key}:")
+                print(value)
+                print()
 
 
 inspect_history_file()
