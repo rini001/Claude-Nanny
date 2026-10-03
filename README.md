@@ -149,7 +149,7 @@ Claude Nanny solves this by converting Claude Code conversations into structured
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 ### CLI
 
@@ -165,6 +165,6 @@ Claude Nanny solves this by converting Claude Code conversations into structured
 
 ---
 
-## 👩‍💻 Author
+## Author
 
 Built as a developer productivity tool to automate engineering summaries and handoffs from Claude Code sessions.
