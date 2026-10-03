@@ -23,14 +23,36 @@ class SessionReader:
                     role = message_data.get("role")
                     content = message_data.get("content")
 
+                    text_content = None
+
+                    # User message
+                    if isinstance(content, str):
+                        text_content = content
+
+                    # Assistant message
+                    elif isinstance(content, list):
+                        text_parts = []
+
+                        for item in content:
+
+                            if (
+                                isinstance(item, dict)
+                                and item.get("type") == "text"
+                            ):
+                                text_parts.append(
+                                    item.get("text", "")
+                                )
+
+                        text_content = "\n".join(text_parts)
+
                     if (
                         isinstance(role, str)
-                        and isinstance(content, str)
+                        and text_content
                     ):
                         messages.append(
                             Message(
                                 role=role,
-                                content=content,
+                                content=text_content,
                             )
                         )
 

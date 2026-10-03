@@ -9,7 +9,7 @@ def main():
         / ".claude"
         / "projects"
         / "c--Users-Dell-Desktop-New-folder--5--shiftninja-client"
-        / "dbee4e39-57f3-4028-870a-f955e5d3678d.jsonl"
+        / "025242dd-ddfc-4866-9a30-60b92b8c450e.jsonl"
     )
 
     reader = SessionReader()

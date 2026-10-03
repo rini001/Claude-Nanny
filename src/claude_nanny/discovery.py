@@ -1,30 +1,29 @@
 from pathlib import Path
-import json
 
 
-def inspect_message_record():
-    session_file = (
-        Path.home()
-        / ".claude"
-        / "projects"
-        / "c--Users-Dell-Desktop-New-folder--5--shiftninja-client"
-        / "dbee4e39-57f3-4028-870a-f955e5d3678d.jsonl"
-    )
+class SessionDiscovery:
 
-    with open(session_file, "r", encoding="utf-8") as file:
+    def get_projects_directory(self) -> Path:
+        return Path.home() / ".claude" / "projects"
 
-        for line in file:
-            data = json.loads(line)
+    def get_project_directories(self) -> list[Path]:
+        projects_dir = self.get_projects_directory()
 
-            if "message" in data:
+        return [
+            item
+            for item in projects_dir.iterdir()
+            if item.is_dir()
+        ]
 
-                print("=" * 80)
-                print("FOUND MESSAGE RECORD")
-                print("=" * 80)
+    def get_latest_session(self, project_dir: Path) -> Path:
+        session_files = list(project_dir.glob("*.jsonl"))
 
-                print(json.dumps(data, indent=2)[:5000])
+        if not session_files:
+            raise ValueError(
+                f"No session files found in {project_dir}"
+            )
 
-                break
-
-
-inspect_message_record()
+        return max(
+            session_files,
+            key=lambda file: file.stat().st_mtime
+        )
