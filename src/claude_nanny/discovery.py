@@ -1,20 +1,32 @@
 from pathlib import Path
+import json
 
 
-def find_claude_directory():
-    claude_dir = Path.home() / ".claude"
+def inspect_session_files():
+    sessions_dir = Path.home() / ".claude" / "sessions"
 
-    print(f"Looking for: {claude_dir}")
+    json_files = list(sessions_dir.glob("*.json"))
 
-    if not claude_dir.exists():
-        print("❌ Claude directory not found")
-        return
+    print(f"Found {len(json_files)} session files\n")
 
-    print("✅ Claude directory found")
-    print("\nContents:")
+    for session_file in json_files:
+        print("=" * 60)
+        print(f"File: {session_file.name}")
 
-    for item in claude_dir.iterdir():
-        print(f" - {item.name}")
+        try:
+            with open(session_file, "r", encoding="utf-8") as file:
+                data = json.load(file)
+
+            print(f"Type: {type(data)}")
+
+            if isinstance(data, dict):
+                print("\nKeys:")
+
+                for key in data.keys():
+                    print(f" - {key}")
+
+        except Exception as error:
+            print(f"Error: {error}")
 
 
-find_claude_directory()
+inspect_session_files()
