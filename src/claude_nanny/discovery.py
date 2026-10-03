@@ -2,31 +2,36 @@ from pathlib import Path
 import json
 
 
-def inspect_session_files():
-    sessions_dir = Path.home() / ".claude" / "sessions"
+def inspect_history_file():
+    history_file = Path.home() / ".claude" / "history.jsonl"
 
-    json_files = list(sessions_dir.glob("*.json"))
+    print(f"Reading: {history_file}")
+    print()
 
-    print(f"Found {len(json_files)} session files\n")
+    if not history_file.exists():
+        print("History file not found")
+        return
 
-    for session_file in json_files:
-        print("=" * 60)
-        print(f"File: {session_file.name}")
+    with open(history_file, "r", encoding="utf-8") as file:
+        for index, line in enumerate(file):
 
-        try:
-            with open(session_file, "r", encoding="utf-8") as file:
-                data = json.load(file)
+            if index >= 5:
+                break
 
-            print(f"Type: {type(data)}")
+            try:
+                data = json.loads(line)
 
-            if isinstance(data, dict):
-                print("\nKeys:")
+                print("=" * 60)
+                print(f"Line {index + 1}")
 
-                for key in data.keys():
-                    print(f" - {key}")
+                if isinstance(data, dict):
+                    print("Keys:")
 
-        except Exception as error:
-            print(f"Error: {error}")
+                    for key in data.keys():
+                        print(f" - {key}")
+
+            except Exception as error:
+                print(error)
 
 
-inspect_session_files()
+inspect_history_file()
