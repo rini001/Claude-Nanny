@@ -1,27 +1,36 @@
 from pathlib import Path
+import json
 
 
-def inspect_client_project():
-    projects_dir = Path.home() / ".claude" / "projects"
-
-    project_dir = (
-        projects_dir
+def inspect_session_file():
+    session_file = (
+        Path.home()
+        / ".claude"
+        / "projects"
         / "c--Users-Dell-Desktop-New-folder--5--shiftninja-client"
+        / "dbee4e39-57f3-4028-870a-f955e5d3678d.jsonl"
     )
 
-    print(f"Project: {project_dir}\n")
+    print(f"Reading:\n{session_file}\n")
 
-    if not project_dir.exists():
-        print("Project not found")
-        return
+    with open(session_file, "r", encoding="utf-8") as file:
 
-    items = list(project_dir.iterdir())
+        for index, line in enumerate(file):
 
-    print(f"Items found: {len(items)}\n")
+            if index >= 5:
+                break
 
-    for item in items:
-        item_type = "DIR" if item.is_dir() else "FILE"
-        print(f"[{item_type}] {item.name}")
+            data = json.loads(line)
+
+            print("=" * 80)
+            print(f"Record {index + 1}")
+            print(f"Type: {type(data)}")
+
+            if isinstance(data, dict):
+                print("\nKeys:")
+
+                for key in data.keys():
+                    print(f" - {key}")
 
 
-inspect_client_project()
+inspect_session_file()
