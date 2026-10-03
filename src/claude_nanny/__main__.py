@@ -1,18 +1,16 @@
 from claude_nanny.discovery import SessionDiscovery
 from claude_nanny.reader import SessionReader
+from claude_nanny.summarizer import create_summary
 
 
 def main():
     discovery = SessionDiscovery()
 
-    project = discovery.get_latest_active_project()
+    project_dir = discovery.get_latest_active_project()
 
     session_file = discovery.get_latest_session(
-        project
+        project_dir
     )
-
-    print(f"Project: {project.name}")
-    print(f"Session: {session_file.name}\n")
 
     reader = SessionReader()
 
@@ -20,12 +18,7 @@ def main():
         session_file
     )
 
-    print(f"Found {len(messages)} messages\n")
-
-    for message in messages[-10:]:
-        print(f"[{message.role}]")
-        print(message.content)
-        print("-" * 50)
+    print(create_summary(messages))
 
 
 if __name__ == "__main__":
